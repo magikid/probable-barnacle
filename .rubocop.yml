@@ -8,9 +8,7 @@ AllCops:
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
-    - 'models/membership.rb'
-    - 'models/people_membership.rb'
-    - 'models/person.rb'
+    - 'models/*'
 
 Layout/MultilineMethodParameterLineBreaks:
   Enabled: true

@@ -32,18 +32,11 @@ logger.info 'Seeding database'
 logger.info 'Creating people'
 Person.seed
 
-logger.info 'Creating memberships'
+logger.info 'Creating memberships and linking them to people'
 Membership.seed
 
-# Linking people to memberships
-logger.info 'Linking people to memberships'
-people_memberships = []
-member_ids = Membership.all.map(&:member_id)
-people_ids = Person.all.map(&:person_id)
-min(people_ids.count, member_ids.count).times do
-  people_membership = PeopleMembership.new(person_id: people_ids.sample, member_id: member_ids.sample)
-  people_memberships << people_membership
-end
-PeopleMembership.multi_insert(people_memberships)
+logger.info 'Creating donors and linking them to people'
+Donor.seed
 
+# Linking people to memberships
 logger.info 'Disconnected from MySQL database'

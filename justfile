@@ -13,4 +13,4 @@ lint:
     bundle exec rubocop
 
 fix:
-    bundle exec rubocop -a
+    bundle exec rubocop -A

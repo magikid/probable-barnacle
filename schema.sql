@@ -3,16 +3,16 @@ CREATE DATABASE `zoo_dos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `zoo_dos`;
 
 CREATE TABLE `memberships` (
-  `member_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `membership_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `subscription_started` date NOT NULL,
   `subscription_expires` date NOT NULL,
   `price` int NOT NULL
 );
 
 CREATE TABLE `people_memberships` (
-  `member_id` integer NOT NULL,
+  `membership_id` integer NOT NULL,
   `person_id` integer UNIQUE NOT NULL,
-  PRIMARY KEY (`member_id`, `person_id`)
+  PRIMARY KEY (`membership_id`)
 );
 
 CREATE TABLE `people` (
@@ -48,7 +48,7 @@ CREATE TABLE `tickets` (
   `ticket_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `start_valid_period` datetime NOT NULL,
   `end_valid_period` datetime NOT NULL,
-  `member_id` int,
+  `membership_id` int,
   `price` int NOT NULL,
   `order_id` int NOT NULL,
   `date_redeemed` datetime
@@ -72,7 +72,7 @@ CREATE INDEX `people_index_1` ON `people` (`last_name`);
 
 CREATE INDEX `people_index_2` ON `people` (`phone_number`);
 
-ALTER TABLE `people_memberships` ADD FOREIGN KEY (`member_id`) REFERENCES `memberships` (`member_id`);
+ALTER TABLE `people_memberships` ADD FOREIGN KEY (`membership_id`) REFERENCES `memberships` (`membership_id`);
 
 ALTER TABLE `people_memberships` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
 
@@ -80,7 +80,7 @@ ALTER TABLE `orders` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
 
-ALTER TABLE `tickets` ADD FOREIGN KEY (`member_id`) REFERENCES `memberships` (`member_id`);
+ALTER TABLE `tickets` ADD FOREIGN KEY (`membership_id`) REFERENCES `memberships` (`membership_id`);
 
 ALTER TABLE `tickets` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
