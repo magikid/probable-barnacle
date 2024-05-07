@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS `zoo_dos`;
+CREATE DATABASE `zoo_dos` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `zoo_dos`;
+
 CREATE TABLE `memberships` (
   `member_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `subscription_started` date NOT NULL,
@@ -70,11 +74,11 @@ CREATE INDEX `people_index_2` ON `people` (`phone_number`);
 
 ALTER TABLE `people_memberships` ADD FOREIGN KEY (`member_id`) REFERENCES `memberships` (`member_id`);
 
-ALTER TABLE `people` ADD FOREIGN KEY (`person_id`) REFERENCES `people_memberships` (`person_id`);
+ALTER TABLE `people_memberships` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
 
-ALTER TABLE `items` ADD FOREIGN KEY (`item_id`) REFERENCES `order_items` (`item_id`);
+ALTER TABLE `orders` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
 
 ALTER TABLE `tickets` ADD FOREIGN KEY (`member_id`) REFERENCES `memberships` (`member_id`);
 
