@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bigdecimal (3.1.8)
+    dotenv (3.1.2)
+    ruby-mysql (4.1.0)
+    sequel (5.80.0)
+      bigdecimal
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  dotenv
+  ruby-mysql
+  sequel
+
+BUNDLED WITH
+   2.3.26
