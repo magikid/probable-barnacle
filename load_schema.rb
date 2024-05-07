@@ -11,8 +11,13 @@ logger = Logger.new($stdout)
 logger.level = Logger::DEBUG
 
 logger.info 'Connecting to MySQL database'
-DB = Sequel.connect(adapter: 'mysql', host: ENV['DB_HOST'], user: ENV['DB_USER'], password: ENV['DB_PASS'],
-                    loggers: [logger])
+DB = Sequel.connect(
+  adapter: 'mysql',
+  host: ENV.fetch('DB_HOST', nil),
+  user: ENV.fetch('DB_USER', nil),
+  password: ENV.fetch('DB_PASS', nil),
+  loggers: [logger]
+)
 logger.info 'Connected to MySQL database'
 
 DB.run(File.read('schema.sql'))

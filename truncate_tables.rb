@@ -13,9 +13,9 @@ logger.level = Logger::DEBUG
 logger.info 'Connecting to MySQL database'
 DB = Sequel.connect(
   adapter: 'mysql',
-  host: ENV['DB_HOST'],
-  user: ENV['DB_USER'],
-  password: ENV['DB_PASS'],
+  host: ENV.fetch('DB_HOST', nil),
+  user: ENV.fetch('DB_USER', nil),
+  password: ENV.fetch('DB_PASS', nil),
   loggers: [logger],
   database: 'zoo_dos'
 )

@@ -9,3 +9,8 @@ truncate:
 seed: truncate
     bundle exec ruby seed_db.rb
 
+lint:
+    bundle exec rubocop
+
+fix:
+    bundle exec rubocop -a

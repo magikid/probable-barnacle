@@ -1,0 +1,18 @@
+require:
+  - rubocop-sequel
+
+AllCops:
+  NewCops: enable
+
+# Offense count: 3
+# Configuration parameters: AllowedConstants.
+Style/Documentation:
+  Exclude:
+    - 'models/membership.rb'
+    - 'models/people_membership.rb'
+    - 'models/person.rb'
+
+Layout/MultilineMethodParameterLineBreaks:
+  Enabled: true
+Layout/FirstMethodParameterLineBreak:
+  Enabled: true
