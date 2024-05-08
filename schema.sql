@@ -6,13 +6,13 @@ CREATE TABLE `memberships` (
   `membership_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `subscription_started` date NOT NULL,
   `subscription_expires` date NOT NULL,
-  `price` int NOT NULL
+  `price` integer NOT NULL
 );
 
 CREATE TABLE `people_memberships` (
   `membership_id` integer NOT NULL,
   `person_id` integer UNIQUE NOT NULL,
-  PRIMARY KEY (`membership_id`)
+  PRIMARY KEY (`membership_id`, `person_id`)
 );
 
 CREATE TABLE `people` (
@@ -56,7 +56,8 @@ CREATE TABLE `tickets` (
 
 CREATE TABLE `entrances` (
   `entrance_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  `ticket_id` int NOT NULL,
+  `ticket_id` int,
+  `membership_id` int,
   `time_entered` datetime NOT NULL
 );
 
@@ -79,12 +80,16 @@ ALTER TABLE `people_memberships` ADD FOREIGN KEY (`person_id`) REFERENCES `peopl
 
 ALTER TABLE `orders` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
 
-ALTER TABLE `orders` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
+ALTER TABLE `order_items` ADD FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
+
+ALTER TABLE `order_items` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 ALTER TABLE `tickets` ADD FOREIGN KEY (`membership_id`) REFERENCES `memberships` (`membership_id`);
 
 ALTER TABLE `tickets` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
-ALTER TABLE `donors` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
-
 ALTER TABLE `entrances` ADD FOREIGN KEY (`ticket_id`) REFERENCES `tickets` (`ticket_id`);
+
+ALTER TABLE `entrances` ADD FOREIGN KEY (`membership_id`) REFERENCES `memberships` (`membership_id`);
+
+ALTER TABLE `donors` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
