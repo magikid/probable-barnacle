@@ -30,43 +30,43 @@ require './models/ticket'
 require './models/entrance'
 
 def run_query(logger, number)
-    case number
-    when 1
-        results = Entrance.top_n_popular_hours_to_visit(6)
-        logger.info 'Results:'
-        results.each { |result| logger.info "Hour: #{result[:hour_entered]}, Entrances: #{result[:entrances]}" }
-    when 2
-        results = Item.top_n_popular_items(5)
-        logger.info 'Results:'
-        results.each { |result| logger.info "Item: #{result[:item_name]}, Orders: #{result[:orders]}" }
-    when 3
-        results = Membership.no_visits_since(6.months.ago)
-        logger.info 'Results:'
-        results.each { |result| logger.info "Name: #{result[:name]}, Last visit: #{result[:last_visit]}" }
-    when 4
-        results = Membership.expiring_in(1.month.from_now)
-        logger.info 'Results:'
-        results.each { |result| logger.info "Expiry: #{result[:subscription_expires]}, Names: #{result[:names]}" }
-    when 5
-        results = Donor.top_n_popular_weeks_to_donate(5)
-        logger.info 'Results:'
-        results.each { |result| logger.info "Week: #{result[:week]}, Donations: #{result[:donations]}" }
-    when 6
-        results = Donor.average_donation_per_week
-        logger.info 'Results:'
-        results.each { |result| logger.info "Week: #{result[:week]}, Average donation: #{result[:average_donation]}" }
-    else
-        logger.error 'Invalid query number'
-    end
+  case number
+  when 1
+    results = Entrance.top_n_popular_hours_to_visit(6)
+    logger.info 'Results:'
+    results.each { |result| logger.info "Hour: #{result[:hour_entered]}, Entrances: #{result[:entrances]}" }
+  when 2
+    results = Item.top_n_popular_items(5)
+    logger.info 'Results:'
+    results.each { |result| logger.info "Item: #{result[:item_name]}, Orders: #{result[:orders]}" }
+  when 3
+    results = Membership.no_visits_since(6.months.ago)
+    logger.info 'Results:'
+    results.each { |result| logger.info "Name: #{result[:name]}, Last visit: #{result[:last_visit]}" }
+  when 4
+    results = Membership.expiring_in(1.month.from_now)
+    logger.info 'Results:'
+    results.each { |result| logger.info "Expiry: #{result[:subscription_expires]}, Names: #{result[:names]}" }
+  when 5
+    results = Donor.top_n_popular_weeks_to_donate(5)
+    logger.info 'Results:'
+    results.each { |result| logger.info "Week: #{result[:week]}, Donations: #{result[:donations]}" }
+  when 6
+    results = Donor.average_donation_per_week
+    logger.info 'Results:'
+    results.each { |result| logger.info "Week: #{result[:week]}, Average donation: #{result[:average_donation]}" }
+  else
+    logger.error 'Invalid query number'
+  end
 end
 
 query_to_run = ARGV[0].to_i
 if query_to_run.between?(1, 6)
-    logger.info "Running query number #{query_to_run}"
-    run_query(logger, query_to_run)
+  logger.info "Running query number #{query_to_run}"
+  run_query(logger, query_to_run)
 else
-    logger.info 'Running all queries'
-    (1..6).each do |query_number|
-        run_query(logger, query_number)
-    end
+  logger.info 'Running all queries'
+  (1..6).each do |query_number|
+    run_query(logger, query_number)
+  end
 end

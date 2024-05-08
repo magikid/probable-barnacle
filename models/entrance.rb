@@ -23,7 +23,8 @@ class Entrance < Sequel::Model(DB[:entrances])
   end
 
   def self.top_n_popular_hours_to_visit(n)
-    select(Sequel.as(Sequel.extract(:hour, :time_entered), :hour_entered), Sequel.as(Sequel.function(:count, Sequel.extract(:hour, :time_entered)), :entrances))
+    select(Sequel.as(Sequel.extract(:hour, :time_entered), :hour_entered),
+           Sequel.as(Sequel.function(:count, Sequel.extract(:hour, :time_entered)), :entrances))
       .group(:hour_entered)
       .order(Sequel.desc(Sequel.function(:count, :hour_entered)))
       .limit(n)
