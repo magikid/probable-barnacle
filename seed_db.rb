@@ -33,10 +33,10 @@ logger.info 'Creating people'
 Person.seed
 
 logger.info 'Creating memberships and linking them to people'
-Membership.seed
+Membership.seed(Person.all)
 
 logger.info 'Creating donors and linking them to people'
-Donor.seed
+Donor.seed(Person.all)
 
 # Linking people to memberships
 logger.info 'Disconnected from MySQL database'
