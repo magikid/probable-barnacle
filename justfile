@@ -14,3 +14,6 @@ lint:
 
 fix:
     bundle exec rubocop -A
+
+query which='':
+    bundle exec ruby queries.rb {{which}}

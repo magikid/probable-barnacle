@@ -35,7 +35,8 @@ CREATE TABLE `items` (
   `item_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `unit_price` int NOT NULL,
   `sale_price` int NOT NULL,
-  `discount` int NOT NULL DEFAULT 0
+  `discount` int NOT NULL DEFAULT 0,
+  `item_name` text
 );
 
 CREATE TABLE `order_items` (
