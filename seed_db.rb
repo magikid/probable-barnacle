@@ -27,6 +27,10 @@ require './models/person'
 require './models/donor'
 require './models/membership'
 require './models/people_membership'
+require './models/item'
+require './models/order'
+require './models/ticket'
+require './models/entrance'
 
 logger.info 'Seeding database'
 logger.info 'Creating people'
@@ -38,8 +42,17 @@ Membership.seed(Person.all)
 logger.info 'Creating donors and linking them to people'
 Donor.seed(Person.all)
 
-logger.info 'Creating entrances and linking them to people'
+logger.info 'Creating items'
+Item.seed
 
+logger.info 'Creating orders'
+Order.seed(Person.all, Item.all)
+
+logger.info 'Creating tickets'
+Ticket.seed(Order.all)
+
+logger.info 'Creating entrances'
+Entrance.seed(Person.all)
 
 # Linking people to memberships
 logger.info 'Disconnected from MySQL database'
