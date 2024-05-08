@@ -49,10 +49,13 @@ logger.info 'Creating orders'
 Order.seed(Person.all, Item.all)
 
 logger.info 'Creating tickets'
-Ticket.seed(Order.all)
+Ticket.seed(Order.all, Membership.all)
 
 logger.info 'Creating entrances'
-Entrance.seed(Person.all)
+Entrance.seed(
+  Membership.where(subscription_started: 1.year.ago..Date.today,
+                   subscription_expires: Date.today..1.year.from_now).all, Ticket.exclude(date_redeemed: nil).all
+)
 
 # Linking people to memberships
 logger.info 'Disconnected from MySQL database'
