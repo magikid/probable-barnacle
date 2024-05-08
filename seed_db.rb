@@ -38,5 +38,8 @@ Membership.seed(Person.all)
 logger.info 'Creating donors and linking them to people'
 Donor.seed(Person.all)
 
+logger.info 'Creating entrances and linking them to people'
+
+
 # Linking people to memberships
 logger.info 'Disconnected from MySQL database'

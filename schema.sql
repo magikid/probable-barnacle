@@ -55,7 +55,8 @@ CREATE TABLE `tickets` (
 );
 
 CREATE TABLE `entrances` (
-  `ticket_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `entrance_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `ticket_id` int NOT NULL,
   `time_entered` datetime NOT NULL
 );
 
@@ -85,3 +86,5 @@ ALTER TABLE `tickets` ADD FOREIGN KEY (`membership_id`) REFERENCES `memberships`
 ALTER TABLE `tickets` ADD FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 ALTER TABLE `donors` ADD FOREIGN KEY (`person_id`) REFERENCES `people` (`person_id`);
+
+ALTER TABLE `entrances` ADD FOREIGN KEY (`ticket_id`) REFERENCES `tickets` (`ticket_id`);
