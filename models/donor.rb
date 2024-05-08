@@ -14,4 +14,19 @@ class Donor < Sequel::Model(DB[:donors])
     end
     multi_insert(donors)
   end
+
+  def self.top_n_popular_weeks_to_donate(n)
+    select(Sequel.as(Sequel.function(:weekofyear, :donation_date), :week), Sequel.as(Sequel.function(:count, :donor_id), :donations))
+    .group(:week)
+    .order(Sequel.desc(:donations))
+    .limit(n)
+    .all
+  end
+
+  def self.average_donation_per_week
+    select(Sequel.as(Sequel.function(:weekofyear, :donation_date), :week), Sequel.as(Sequel.function(:avg, :donation_amount), :average_donation))
+    .group(:week)
+    .order(:week)
+    .all
+  end
 end

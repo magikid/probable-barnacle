@@ -40,13 +40,21 @@ def run_query(logger, number)
         logger.info 'Results:'
         results.each { |result| logger.info "Item: #{result[:item_name]}, Orders: #{result[:orders]}" }
     when 3
-        Membership.no_visits_in(6.months)
+        results = Membership.no_visits_since(6.months.ago)
+        logger.info 'Results:'
+        results.each { |result| logger.info "Name: #{result[:name]}, Last visit: #{result[:last_visit]}" }
     when 4
-        Membership.expiring_in(1.month)
+        results = Membership.expiring_in(1.month.from_now)
+        logger.info 'Results:'
+        results.each { |result| logger.info "Expiry: #{result[:subscription_expires]}, Names: #{result[:names]}" }
     when 5
-        Donor.top_n_popular_weeks_to_donate(5)
+        results = Donor.top_n_popular_weeks_to_donate(5)
+        logger.info 'Results:'
+        results.each { |result| logger.info "Week: #{result[:week]}, Donations: #{result[:donations]}" }
     when 6
-        Donor.average_donation_per_week
+        results = Donor.average_donation_per_week
+        logger.info 'Results:'
+        results.each { |result| logger.info "Week: #{result[:week]}, Average donation: #{result[:average_donation]}" }
     else
         logger.error 'Invalid query number'
     end

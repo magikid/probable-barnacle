@@ -41,4 +41,23 @@ class Membership < Sequel::Model(DB[:memberships])
       retry if try_count < 3
     end
   end
+
+  def self.no_visits_since(timeframe)
+    select(Sequel.as(Sequel.join([:first_name, ' ', :last_name]), :name), Sequel.as(Sequel.function(:max, Sequel.function(:date, :time_entered)), :last_visit))
+    .join(:entrances, membership_id: :membership_id)
+    .join(:people_memberships, membership_id: :membership_id)
+    .join(:people, person_id: :person_id)
+    .group(:name)
+    .having { Sequel.function(:max, :time_entered) < timeframe }
+    .order(:last_visit)
+  end
+
+  def self.expiring_in(timeframe)
+    select(Sequel.as(Sequel.function(:group_concat, Sequel.join([:first_name, ' ', :last_name])), :names), :subscription_expires)
+    .join(:people_memberships, membership_id: :membership_id)
+    .join(:people, person_id: :person_id)
+    .group(:subscription_expires)
+    .where { subscription_expires < timeframe }
+    .order(:subscription_expires)
+  end
 end
